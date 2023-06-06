@@ -1,27 +1,40 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { fetchAllUser } from "../services/UserService";
+import ReactPaginate from 'react-paginate';
+
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
+  const [totalUsers, setTotalUser] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     //call APIs
     // dry
-    getUser();
+    getUser(2);
   }, []);
 
-  const getUser = async () => {
-    let res = await fetchAllUser(); //fetchAS is asynchronous
+  const getUser = async (page) => {
+    let res = await fetchAllUser(page); //fetchAS is asynchronous
 
     console.log(">> check new res: ", res)
 
     if (res && res.data) {
-      // app don't break if response.data error (if status 200)
-      setListUsers(res.data);
+        console.log(res)
+        setTotalUser(res.total)
+        setTotalPages(res.total_pages)
+        setListUsers(res.data);
     }
   };
   console.log(listUsers);
+
+  //handle of react-paginate
+  const handlePageClick = (e) => {
+    getUser(+e.selected + 1) // + for convert e to string
+    console.log("e lib: ", e)
+  }
+
   return (
     <>
       <Table striped bordered hover size="sm">
@@ -48,6 +61,26 @@ const TableUsers = (props) => {
             })}
         </tbody>
       </Table>
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={totalPages}
+        previousLabel="< previous"
+        renderOnZeroPageCount={null}
+
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        containerClassName="pagination"
+        activeClassName="active"
+      />
     </>
   );
 };
