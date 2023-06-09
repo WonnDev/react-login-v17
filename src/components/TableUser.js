@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate';
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
-  const [totalUsers, setTotalUser] = useState(0);
+//   const [totalUsers, setTotalUser] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
@@ -18,21 +18,21 @@ const TableUsers = (props) => {
   const getUser = async (page) => {
     let res = await fetchAllUser(page); //fetchAS is asynchronous
 
-    console.log(">> check new res: ", res)
+    // console.log(">> check new res: ", res)
 
     if (res && res.data) {
-        console.log(res)
-        setTotalUser(res.total)
+        // setTotalUser(res.total)
         setTotalPages(res.total_pages)
         setListUsers(res.data);
     }
+
   };
   console.log(listUsers);
 
   //handle of react-paginate
   const handlePageClick = (e) => {
     getUser(+e.selected + 1) // + for convert e to string
-    console.log("e lib: ", e)
+    console.log("number of e library: ", e)
   }
 
   return (
