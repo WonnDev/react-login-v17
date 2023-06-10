@@ -4,6 +4,7 @@ import { fetchAllUser } from "../services/UserService";
 import ReactPaginate from "react-paginate";
 import ModalAddNew from "./ModalAddNew";
 import ButtonAddNew from "./ButtonAddNew";
+import ModalEdit from "./ModalEdit";
 
 
 const TableUsers = (props) => {
@@ -12,8 +13,12 @@ const TableUsers = (props) => {
   const [totalPages, setTotalPages] = useState(0);
 
   const [showModalAddNew, setShowModalAddNew] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [dataUserEdit, setDataUserEdit] = useState({});
+
   const handleClose = () => {
     setShowModalAddNew(false);
+    setShowModalEdit(false);
   };
 
   const handleUpdateTable = (user) => {
@@ -45,6 +50,11 @@ const TableUsers = (props) => {
     console.log("number of e library: ", e);
   };
 
+  const handleEdit = (user) => {
+    setDataUserEdit(user);
+    setShowModalEdit(true);
+  }
+
   return (
     <>
     <ButtonAddNew handleShow={() => setShowModalAddNew(true)} />
@@ -55,6 +65,7 @@ const TableUsers = (props) => {
             <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +78,12 @@ const TableUsers = (props) => {
                   <td>{item.email}</td>
                   <td>{item.first_name}</td>
                   <td>{item.last_name}</td>
+                  <td>
+                    <button className="btn btn-warning mx-3"
+                        onClick={() => handleEdit(item)}
+                    >Edit</button>
+                    <button className="btn btn-danger">Del</button>
+                  </td>
                 </tr>
               );
             })}
@@ -95,6 +112,11 @@ const TableUsers = (props) => {
       show={showModalAddNew}
       handleClose={handleClose}
       handleUpdateTable={handleUpdateTable}
+      />
+      <ModalEdit
+        show={showModalEdit}
+        dataUserEdit={dataUserEdit}
+        handleClose={handleClose}
       />
     </>
   );
