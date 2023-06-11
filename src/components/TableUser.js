@@ -6,6 +6,7 @@ import ModalAddNew from "./ModalAddNew";
 import ButtonAddNew from "./ButtonAddNew";
 import ModalEdit from "./ModalEdit";
 import _ from "lodash";
+import ModalConfirm from "./ModalComfirm";
 
 
 const TableUsers = (props) => {
@@ -17,9 +18,13 @@ const TableUsers = (props) => {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [dataUserEdit, setDataUserEdit] = useState({});
 
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [dataUserDelete, setDataUserDelete] = useState({});
+
   const handleClose = () => {
     setShowModalAddNew(false);
     setShowModalEdit(false);
+    setShowModalDelete(false);
   };
 
   const handleUpdateTable = (user) => {
@@ -65,6 +70,17 @@ const TableUsers = (props) => {
     setShowModalEdit(true);
   }
 
+  const handleDelete = (user) => {
+    setShowModalDelete(true);
+    setDataUserDelete(user);
+  }
+
+  const handleDeleteUserFromModal = (user) => {
+    let cloneListUsers = _.cloneDeep(listUsers);
+    cloneListUsers = cloneListUsers.filter(item => item.id !== user.id);
+    setListUsers(cloneListUsers);
+  }
+
   return (
     <>
     <ButtonAddNew handleShow={() => setShowModalAddNew(true)} />
@@ -92,7 +108,9 @@ const TableUsers = (props) => {
                     <button className="btn btn-warning mx-3"
                         onClick={() => handleEdit(item)}
                     >Edit</button>
-                    <button className="btn btn-danger">Del</button>
+                    <button className="btn btn-danger"
+                        onClick={() => handleDelete(item)}
+                    >Del</button>
                   </td>
                 </tr>
               );
@@ -128,6 +146,13 @@ const TableUsers = (props) => {
         dataUserEdit={dataUserEdit}
         handleClose={handleClose}
         handleEditUserFromModal={handleEditUserFromModal}
+      />
+      <ModalConfirm
+        show={showModalDelete}
+        handleClose={handleClose}
+        dataUserDelete={dataUserDelete}
+        handleDeleteUserFromModal={handleDeleteUserFromModal}
+
       />
     </>
   );
