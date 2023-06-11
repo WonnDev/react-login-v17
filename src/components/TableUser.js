@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 import ModalAddNew from "./ModalAddNew";
 import ButtonAddNew from "./ButtonAddNew";
 import ModalEdit from "./ModalEdit";
+import _ from "lodash";
 
 
 const TableUsers = (props) => {
@@ -23,6 +24,15 @@ const TableUsers = (props) => {
 
   const handleUpdateTable = (user) => {
     setListUsers([user,...listUsers])
+  }
+
+  const handleEditUserFromModal = (user) => {
+    // let cloneListUsers = [...listUsers]; // same index memory save => change 1 -> 2 changed too
+    let cloneListUsers = _.cloneDeep(listUsers); // cloneDeep has clone and changed index memory save state
+    let index = listUsers.findIndex(item => item.id === user.id); //find id in list === id user to handleChange
+    cloneListUsers[index].first_name = user.first_name;
+
+    setListUsers(cloneListUsers);
   }
 
   useEffect(() => {
@@ -109,14 +119,15 @@ const TableUsers = (props) => {
         activeClassName="active"
       />
       <ModalAddNew
-      show={showModalAddNew}
-      handleClose={handleClose}
-      handleUpdateTable={handleUpdateTable}
+        show={showModalAddNew}
+        handleClose={handleClose}
+        handleUpdateTable={handleUpdateTable}
       />
       <ModalEdit
         show={showModalEdit}
         dataUserEdit={dataUserEdit}
         handleClose={handleClose}
+        handleEditUserFromModal={handleEditUserFromModal}
       />
     </>
   );

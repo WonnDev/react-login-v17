@@ -73,5 +73,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 createreactapp
 down to v17 (package.json) 17.0.2 (react,react-dom), syntax v17 in index.js
 --save-exact react-bootstrap@2.2.2 bootstrap@5.1.3 sass@1.49.7 axios@0.26.1
---save-exact react-paginate@8.1.2
---save-exact react-toastify@8.2.0
+--save-exact react-paginate@8.1.2 (bookmark)
+--save-exact react-toastify@8.2.0 (notify)
+--save-exact lodash@4.17.21 (replace index memory save state)
+

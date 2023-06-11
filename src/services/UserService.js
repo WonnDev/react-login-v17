@@ -6,7 +6,11 @@ const fetchAllUser = (page) => {
 }
 
 const postCreateUser = ( name, job ) => {
-    return axios.post("/api/users", { name, job }); // name: name, job: job
+    return axios.post("/api/users/", { name, job }); // name: name, job: job
 }
 
-export { fetchAllUser, postCreateUser }; // export {} for export alot obj
+const putUpdateUser = (name, job) => {
+    return axios.put("/api/users/", { name, job });
+}
+
+export { fetchAllUser, postCreateUser, putUpdateUser }; // export {} for export alot obj

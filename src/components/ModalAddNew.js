@@ -2,7 +2,7 @@ import { useState } from "react";
 // import Button from 'react-bootstrap/Button';
 // import Modal from 'react-bootstrap/Modal';
 import { Button, Modal, Form } from "react-bootstrap";
-import { postCreateUser } from "../services/UserService";
+import { postCreateUser, putUpdateUser } from "../services/UserService";
 import { toast } from 'react-toastify';
 
 const ModalAddNew = (props) => {
@@ -11,7 +11,12 @@ const ModalAddNew = (props) => {
   const [ name, setName ] = useState("");
   const [ job, setJob ] = useState("");
 
- const handleSaveUser = async () => {
+  const handleEditUser = async () => {
+    let res = await putUpdateUser(name, job);
+    console.log("check update: ", res);
+  }
+
+  const handleSaveUser = async () => {
     let res = await postCreateUser(name, job);
     console.log("check res from API CreateUser: ", res)
 
@@ -26,7 +31,7 @@ const ModalAddNew = (props) => {
         //err
         toast.error("An error...");
     }
- }
+  }
 
   return (
     <>
