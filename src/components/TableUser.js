@@ -87,7 +87,9 @@ const TableUsers = (props) => {
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>ID
+              <i className="fas fa-heart"></i>
+            </th>
             <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
