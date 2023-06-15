@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 import ModalAddNew from "./ModalAddNew";
 import ButtonAddNew from "./ButtonAddNew";
 import ModalEdit from "./ModalEdit";
-import _ from "lodash";
+import _, { debounce } from "lodash";
 import ModalConfirm from "./ModalComfirm";
 import "./TableUser.scss";
 
@@ -26,6 +26,10 @@ const TableUsers = (props) => {
   const [sortBy, setSortBy] = useState("asc"); // sort by ASC|DESC
   const [sortField, setSortField] = useState("id");
 
+  //input search
+  const [inputSearch, setInputSearch] = useState("");
+
+  //handle
   const handleClose = () => {
     setShowModalAddNew(false);
     setShowModalEdit(false);
@@ -34,7 +38,7 @@ const TableUsers = (props) => {
 
   const handleUpdateTable = (user) => {
     setListUsers([user,...listUsers])
-  }
+  };
 
   const handleEditUserFromModal = (user) => {
     // let cloneListUsers = [...listUsers]; // same index memory save => change 1 -> 2 changed too
@@ -43,7 +47,7 @@ const TableUsers = (props) => {
     cloneListUsers[index].first_name = user.first_name;
 
     setListUsers(cloneListUsers);
-  }
+  };
 
   useEffect(() => {
     //call APIs
@@ -52,7 +56,7 @@ const TableUsers = (props) => {
   }, []);
 
   const getUser = async (page) => {
-    let res = await fetchAllUser(page); //fetchAS is asynchronous
+    let res = await fetchAllUser(page); //asynchronous
 
     // console.log(">> check new res: ", res)
 
@@ -72,18 +76,18 @@ const TableUsers = (props) => {
   const handleEdit = (user) => {
     setDataUserEdit(user);
     setShowModalEdit(true);
-  }
+  };
 
   const handleDelete = (user) => {
     setShowModalDelete(true);
     setDataUserDelete(user);
-  }
+  };
 
   const handleDeleteUserFromModal = (user) => {
     let cloneListUsers = _.cloneDeep(listUsers);
     cloneListUsers = cloneListUsers.filter(item => item.id !== user.id);
     setListUsers(cloneListUsers);
-  }
+  };
   //sort
   const handleSort = (sortBy, sortField) => {
     setSortBy(sortBy);
@@ -91,13 +95,35 @@ const TableUsers = (props) => {
 
     let cloneListUsers = _.cloneDeep(listUsers);
     cloneListUsers = _.orderBy(cloneListUsers, [sortField], [sortBy]); // orderBy from lodash (excellent *)
-    console.log("check after sort: ",cloneListUsers);
+    // console.log("check after sort: ",cloneListUsers);
     setListUsers(cloneListUsers);
-  }
+  };
+
+  const handleSearch = debounce((event) => {
+    let term = event.target.value;
+    if(term) {
+      //this call API too much without func Debounce outside
+      let cloneListUsers = _.cloneDeep(listUsers);
+      cloneListUsers = cloneListUsers.filter(item => item.email.includes(term)) //here is includes of string not array
+      setListUsers(cloneListUsers);
+    } else {
+      getUser(1);
+    }
+  }, 300); //300ms
+  //this handle have bug is we are doing on a UI with Fake API, so when del keyword (!= "") of Search then term ""
+  // inreal API, willbe fix
 
   return (
     <>
-    <ButtonAddNew handleShow={() => setShowModalAddNew(true)} />
+      <ButtonAddNew handleShow={() => setShowModalAddNew(true)} />
+      <div className="col-4 mb-3">
+        <input
+        className="form-control"
+        placeholder="Search user by email..."
+        // value={inputSearch}
+        onChange={(event) => handleSearch(event)}
+        />
+      </div>
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
