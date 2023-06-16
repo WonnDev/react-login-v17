@@ -7,7 +7,11 @@ import ButtonAddNew from "./ButtonAddNew";
 import ModalEdit from "./ModalEdit";
 import _, { debounce } from "lodash";
 import ModalConfirm from "./ModalComfirm";
+import { CSVLink } from "react-csv";
+import Papa from "papaparse";
+import { toast } from "react-toastify";
 import "./TableUser.scss";
+
 
 
 const TableUsers = (props) => {
@@ -28,6 +32,9 @@ const TableUsers = (props) => {
 
   //input search
   const [inputSearch, setInputSearch] = useState("");
+
+  //export CSV
+  const [dataExport, setDataExport] = useState([]);
 
   //handle
   const handleClose = () => {
@@ -113,9 +120,110 @@ const TableUsers = (props) => {
   //this handle have bug is we are doing on a UI with Fake API, so when del keyword (!= "") of Search then term ""
   // inreal API, willbe fix
 
+  //handle custom getUserExport
+  const getUserExport = (event, done) => { //function done run
+    let result = [];
+    if(listUsers && listUsers.length > 0){ //build table data
+      result.push(["Id", "Email", "First name", "Last name"]); //create header
+      listUsers.map((item, index) => { //build body
+        let arr = [];
+        arr[0] = item.id;
+        arr[1] = item.email;
+        arr[2] = item.first_name;
+        arr[3] = item.last_name;
+        result.push(arr);
+      })
+      setDataExport(result);
+      done();
+    }
+  }
+
+  const handleImportCSV = (event) => {
+    if(event.target && event.target.files && event.target.files[0]) {
+      let file = event.target.files[0]; //only 1 file so chosse index 0
+
+      if(file.type !== "text/csv") {
+        toast.error("Only accept CSV file...")
+        return;
+      }
+      //Parse local CSV File
+      Papa.parse(file, {
+        // header: true,
+        complete: function (results) {
+    //       // custom require
+    //       let rawCSV = results.data;
+    //       if(rawCSV.length > 0){
+    //         if(rawCSV[0] && rawCSV[0].length === 3){
+    //           if(rawCSV[0][0] !== "email"
+    //           ||rawCSV[0][1] !== "first_name"
+    //           ||rawCSV[0][2] !== "last_name"
+    //           ) {
+    //             toast.error("Wrong format Header on CSV file!");
+    //           } else {
+    //             let result = [];
+
+    //             rawCSV.map((item, index)=> {
+    //               if(index > 0 && item.length === 3){ //raw1 >0
+    //                 let obj = [];
+    //                 obj.email = item[0]
+    //                 obj.first_name = item[1]
+    //                 obj.last_name = item[2]
+    //                 result.push(obj);
+    //                } 
+    //             })
+    //             setListUsers(result)
+    //           }
+    //         } else {
+    //           toast.error("Wrong format data on CSV file!");
+    //         }
+    //       } else {
+    //       toast.error("Wrong format data on CSV file!");
+    //       }
+    
+      let rawCSV = results.data;
+      if(rawCSV.length > 0){
+        let result = [];
+
+        rawCSV.map((item, index)=> {
+          if(index > 0 && item.length === 3){ //raw1 >0
+            let obj = [];
+            obj.email = item[0]
+            obj.first_name = item[1]
+            obj.last_name = item[2]
+            result.push(obj);
+            } 
+        })
+        setListUsers(result)
+      }
+
+          console.log("Finish:",results.data);
+        }
+      })
+    }
+    
+  }
+
   return (
     <>
       <ButtonAddNew handleShow={() => setShowModalAddNew(true)} />
+      <div>
+        <label className="btn btn-warning mx-2" htmlFor="test">
+          <i className="fa-solid fa-file-arrow-up"></i> Import</label>
+
+        <input
+          id="test" type="file" hidden
+          onChange={(event) => {handleImportCSV(event)}}
+        />
+
+        <CSVLink
+          filename={"users.csv"}
+          className={"btn btn-primary my-3"}
+          data={dataExport}
+          asyncOnClick={true} //waiting for onClick run first then get data from dataExport
+          onClick={getUserExport}
+        ><i className="fa-solid fa-file-arrow-down"></i> Export</CSVLink>
+        {/* <CSVDownload data={csvData} target="_blank"/> */}
+      </div>
       <div className="col-4 mb-3">
         <input
         className="form-control"

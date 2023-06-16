@@ -10,7 +10,7 @@ const ButtonAddNew = (props) => {
         <span><b>List Users:</b></span>
         <button className='btn btn-success'
           onClick={handleShow}
-        >Add new user</button>
+        ><i className="fa-solid fa-circle-plus"></i> Add new</button>
       </div>
   )
 }
