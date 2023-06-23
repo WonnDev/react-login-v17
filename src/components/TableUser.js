@@ -108,10 +108,12 @@ const TableUsers = (props) => {
 
   const handleSearch = debounce((event) => {
     let term = event.target.value;
+    // setInputSearch(term)
     if(term) {
-      //this call API too much without func Debounce outside
+      //this call API too much without func Debounce outside 
+      //this function just filter on filtered list
       let cloneListUsers = _.cloneDeep(listUsers);
-      cloneListUsers = cloneListUsers.filter(item => item.email.includes(term)) //here is includes of string not array
+      cloneListUsers = cloneListUsers.filter(item => item.email.includes(term)) //TODO: here is includes of string not array
       setListUsers(cloneListUsers);
     } else {
       getUser(1);
@@ -148,53 +150,53 @@ const TableUsers = (props) => {
       }
       //Parse local CSV File
       Papa.parse(file, {
-        // header: true,
+        header: true,
         complete: function (results) {
     //       // custom require
-    //       let rawCSV = results.data;
-    //       if(rawCSV.length > 0){
-    //         if(rawCSV[0] && rawCSV[0].length === 3){
-    //           if(rawCSV[0][0] !== "email"
-    //           ||rawCSV[0][1] !== "first_name"
-    //           ||rawCSV[0][2] !== "last_name"
-    //           ) {
-    //             toast.error("Wrong format Header on CSV file!");
-    //           } else {
-    //             let result = [];
+          // let rawCSV = results.data;
+          // if(rawCSV.length > 0){
+          //   if(rawCSV[0] && rawCSV[0].length === 3){
+          //     if(rawCSV[0][0] !== "firstname"
+          //     ||rawCSV[0][1] !== "lastname"
+          //     ||rawCSV[0][2] !== "email"
+          //     ) {
+          //       toast.error("Wrong format Header on CSV file!");
+          //     } else {
+          //       let result = [];
 
-    //             rawCSV.map((item, index)=> {
-    //               if(index > 0 && item.length === 3){ //raw1 >0
-    //                 let obj = [];
-    //                 obj.email = item[0]
-    //                 obj.first_name = item[1]
-    //                 obj.last_name = item[2]
-    //                 result.push(obj);
-    //                } 
-    //             })
-    //             setListUsers(result)
-    //           }
-    //         } else {
-    //           toast.error("Wrong format data on CSV file!");
-    //         }
-    //       } else {
-    //       toast.error("Wrong format data on CSV file!");
-    //       }
-    
-      let rawCSV = results.data;
-      if(rawCSV.length > 0){
-        let result = [];
+          //       rawCSV.map((item, index)=> {
+          //         if(index > 0 && item.length === 3){ //raw1 >0
+          //           let obj = [];
+          //           obj.email = item[0]
+          //           obj.first_name = item[1]
+          //           obj.last_name = item[2]
+          //           result.push(obj);
+          //          } 
+          //       })
+          //       setListUsers(result)
+          //     }
+          //   } else {
+          //     toast.error("Wrong format data on CSV file!");
+          //   }
+          // } else {
+          // toast.error("Wrong format data on CSV file!");
+          // }
 
-        rawCSV.map((item, index)=> {
-          if(index > 0 && item.length === 3){ //raw1 >0
-            let obj = [];
-            obj.email = item[0]
-            obj.first_name = item[1]
-            obj.last_name = item[2]
-            result.push(obj);
-            } 
-        })
-        setListUsers(result)
-      }
+          let rawCSV = results.data;
+          if(rawCSV.length > 0){
+            let result = [];
+            rawCSV.map((item, index)=> {
+              if(index > 0){
+                let obj = [];
+                obj.email = item[0]
+                obj.firstname = item[1]
+                obj.lastname = item[2]
+                result.push(obj);
+                }
+            })
+            toast.success("Import CSV success!");
+            setListUsers(result)
+          }
 
           console.log("Finish:",results.data);
         }
