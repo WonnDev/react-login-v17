@@ -3,12 +3,13 @@ import "./Home.scss";
 import { useEffect, useRef } from "react";
 
 const Home = () => {
-  const usenameRef = useRef(null);
+//   const usenameRef = useRef(null);
 
-  const handleOnSubmit = (event) => {
-    event.preventDefault();
-    console.log(usenameRef.current.valueOf);
-  };
+//   const handleOnSubmit = (event) => {
+//     event.preventDefault();
+//     console.log(usenameRef.current.value);
+//   };
+// anotherway to get value by useRef
 
   useEffect(() => {
     console.log("All assets are loaded");
@@ -256,7 +257,6 @@ const Home = () => {
       calculateFaceMove(e);
       var value = email.value;
       curEmailIndex = value.length;
-
       // very crude email validation to trigger effects
       if (curEmailIndex > 0) {
         if (mouthStatus == "small") {
@@ -597,7 +597,7 @@ const Home = () => {
       // handle events for password input
       password.addEventListener("focus", onPasswordFocus);
       password.addEventListener("blur", onPasswordBlur);
-      //passwordLabel.addEventListener('click', onPasswordLabelClick);
+    //   passwordLabel.addEventListener('click', onPasswordLabelClick);
 
       // handle events for password checkbox
       showPasswordCheck.addEventListener("change", onPasswordToggleChange);
@@ -1017,7 +1017,7 @@ const Home = () => {
         <label htmlFor="loginEmail" id="loginEmailLabel">
           Email
         </label>
-        <input ref={usenameRef} type="email" id="loginEmail" maxlength="254" />
+        <input type="email" id="loginEmail" maxlength="254" />
         <p className="helper helper1">email@domain.com</p>
       </div>
       <div className="inputGroup inputGroup2">
@@ -1032,7 +1032,7 @@ const Home = () => {
         </label>
       </div>
       <div className="inputGroup inputGroup3">
-        <button id="login" onClick={handleOnSubmit}>
+        <button id="login">
           Log in
         </button>
       </div>
