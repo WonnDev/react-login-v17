@@ -83,7 +83,7 @@ body {
 		}
 		
 		&.focusWithText .helper {
-			transform: translate(1em, 1.55em) scale(.6); opacity: 1;
+			transform: translate(1em, 1.75em) scale(.6); opacity: 1;
 		}
 	}
 	.inputGroup2 {
@@ -125,4 +125,29 @@ body {
 			}
 		}
 	}
+	.style-goback {
+        margin: 1em 0 0 0;
+	}
+	.style-goback:hover {
+		border-bottom: 1px solid $darkBlue;
+		width: 30%;
+        cursor: pointer;
+	}
 }
+@media only screen and (max-width: 912px) {
+	#form-login {
+		position: relative;
+		margin-top: 21em;
+
+		.inputGroup1 {
+			.helper1 {
+				font-size: 1.15em;
+				padding: 0 0.8em 0;
+			}
+			&.focusWithText .helper {
+				transform: translate(1em, 2.7em) scale(0.6);
+			}
+		}
+	}
+
+  }

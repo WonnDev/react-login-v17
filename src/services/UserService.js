@@ -17,8 +17,13 @@ const deleteUser = (id) => {
     return axios({
         method: "DELETE",
         url: `api/user/${id}`
-    })
+    });
     // return axios.delete(`api/user/${id}`);
 }
 
-export { fetchAllUser, postCreateUser, putUpdateUser, deleteUser }; // export {} for export alot obj
+//login
+const loginApi = (email, password) => {
+    return axios.post("/api/login", {email, password});
+}
+
+export { fetchAllUser, postCreateUser, putUpdateUser, deleteUser, loginApi }; // export {} for export alot obj
