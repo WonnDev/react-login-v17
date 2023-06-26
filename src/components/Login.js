@@ -3,25 +3,47 @@ import "./Login.scss";
 import { useState, useEffect, useRef } from "react";
 import { loginApi } from "../services/UserService";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    //navigate
+    const navigate = useNavigate();
 
     const [email2, setEmail] =  useState("");
     const [password2, setPassword] = useState("");
+
+    const [clickedLogin, setClickedLogin] = useState(false);
+
+    //check login
+    useEffect(() => {
+        let token = localStorage.getItem("token");
+        if(token) {
+            navigate("/");
+        }
+    }, [])
 
     const handleLogin = async () => {
         if(!email2 || !password2) {
             toast.error("Email/Password is required!");
             return;
         }
+        setClickedLogin(true);
         
-        let res = await loginApi("eve.holt@reqres.in", password2); //email2, pw2
+        let res = await loginApi(email2, password2);
         if(res && res.token){
             localStorage.setItem("token", res.token);
             toast.success("Login Success!");
+            setTimeout(() => {navigate("/")}, 1200);
+        } else {
+            //error
+            if(res && res.status === 400) {
+                toast.error(res.data.error);
+            }
         }
+        setClickedLogin(false);
     }
 
+    //loginpage
     useEffect(() => {
         console.log("All assets are loaded");
         var emailLabel = document.querySelector("#loginEmailLabel"),
@@ -1025,7 +1047,7 @@ const Login = () => {
 
       <div className="inputGroup inputGroup1">
         <label htmlFor="loginEmail" id="loginEmailLabel">
-          Email
+          Email : eve.holt@reqres.in
         </label>
         <input
         type="email"
@@ -1058,17 +1080,15 @@ const Login = () => {
         onClick={(e) => {
             e.preventDefault()
             handleLogin();
-        }}
-        >
-          Log in
+        }}>
+            Log in&nbsp;
+            { clickedLogin && <i className="fa-solid fa-cog fa-spin fa-spin-reverse"></i>}
         </button>
       </div>
-      <label htmlFor="btn-goback" className="style-goback">
-        <i className="fa-solid fa-angles-left"></i>Go back
-      </label>
-      <button id="btn-goback" hidden
+      <a href="/" className="style-btn-goback">
+        <i className="fa-solid fa-angles-left"></i> Go back
+      </a>
       
-      ></button>
 
     </form>
   );

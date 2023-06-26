@@ -16,7 +16,6 @@ const ModalEdit = (props) => {
         first_name: name,
         id: dataUserEdit.id,
       });
-
       handleClose();
       toast.success("Update User Success!");
     }

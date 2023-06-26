@@ -3,7 +3,7 @@
 const Home = () => {
   return (
   <>
-    Homepage is building...
+    Homepage is building... Please visit tab Manager Users.
   </>
 )};
 

@@ -36,9 +36,9 @@ body {
 	}
 	.inputGroup {
 		margin: 0 0 2em; padding: 0; position: relative;
-		&:last-of-type {
-			margin-bottom: 0;
-		}
+		// &:last-of-type {
+		// 	margin-bottom: 0;
+		// }
 	}
 	label {
 		margin: 0 0 12px; display: block;
@@ -125,13 +125,14 @@ body {
 			}
 		}
 	}
-	.style-goback {
-        margin: 1em 0 0 0;
+	.style-btn-goback {
+		text-decoration: none;
+		color: $darkBlue;
 	}
-	.style-goback:hover {
-		border-bottom: 1px solid $darkBlue;
-		width: 30%;
+	.style-btn-goback:hover {
+		border-bottom: 2px solid $darkBlue;
         cursor: pointer;
+		font-weight: bold;
 	}
 }
 @media only screen and (max-width: 912px) {
@@ -142,10 +143,7 @@ body {
 		.inputGroup1 {
 			.helper1 {
 				font-size: 1.15em;
-				padding: 0 0.8em 0;
-			}
-			&.focusWithText .helper {
-				transform: translate(1em, 2.7em) scale(0.6);
+				padding: 1em 0.8em 0;
 			}
 		}
 	}
