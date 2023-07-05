@@ -15,5 +15,19 @@ code {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 0 !important;
+  }
+  .customize-table{
+    width: inherit;
+    overflow-x: auto;
+  }
+  tbody td {
+    text-align: center;
+    button {
+      margin-top: .5em;
+    }
+  }
+  .pagination{
+    justify-content: center;
   }
 }

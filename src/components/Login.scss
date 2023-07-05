@@ -135,17 +135,34 @@ body {
         cursor: pointer;
 		font-weight: bold;
 	}
+	
 }
+
 @media only screen and (max-width: 912px) {
 	#form-login {
 		position: relative;
-		margin-top: 21em;
+		margin-top: 22em;
 
 		.inputGroup1 {
 			.helper1 {
 				font-size: 1.15em;
 				padding: 1em 0.8em 0;
 			}
+		}
+		
+	}
+
+  }
+  @media only screen and (max-width: 576px) {
+	.container{
+		.add-new{
+			button.btn-success{
+				position: relative;
+				top: 3.39em;
+			}
+		}
+		div.my-3{
+			margin-bottom: 0 !important;
 		}
 	}
 

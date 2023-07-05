@@ -226,7 +226,7 @@ const TableUsers = (props) => {
         ><i className="fa-solid fa-file-arrow-down"></i> Export</CSVLink>
         {/* <CSVDownload data={csvData} target="_blank"/> */}
       </div>
-      <div className="col-4 mb-3">
+      <div className="col-12 col-sm-4 mb-3">
         <input
         className="form-control"
         placeholder="Search user by email..."
@@ -234,67 +234,70 @@ const TableUsers = (props) => {
         onChange={(event) => handleSearch(event)}
         />
       </div>
-      <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>
-              <div className="sort-header">
-                <span>ID</span>
-                <span>
-                  <i
-                  className="fa-solid fa-arrow-up"
-                  onClick={() => handleSort("desc", "id")}
-                  ></i>
-                  <i
-                  className="fa-solid fa-arrow-down"
-                  onClick={() => handleSort("asc", "id")}
-                  ></i>
-                </span>
-              </div>
-            </th>
-            <th>Email</th>
-            <th>
-              <div className="sort-header">
-                <span>First Name</span>
-                <span>
-                  <i
+      <div className="customize-table">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>
+                <div className="sort-header">
+                  <span>ID</span>
+                  <span>
+                    <i
                     className="fa-solid fa-arrow-up"
-                    onClick={() => handleSort("desc", "first_name")}
-                  ></i>
-                  <i
+                    onClick={() => handleSort("desc", "id")}
+                    ></i>
+                    <i
                     className="fa-solid fa-arrow-down"
-                    onClick={() => handleSort("asc", "first_name")}
-                  ></i>
-                </span>
-              </div>
-            </th>
-            <th>Last Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {listUsers &&
-            listUsers.length > 0 &&
-            listUsers.map((item, index) => {
-              return (
-                <tr key={`user-${index}`}>
-                  <td>{item.id}</td>
-                  <td>{item.email}</td>
-                  <td>{item.first_name}</td>
-                  <td>{item.last_name}</td>
-                  <td>
-                    <button className="btn btn-warning mx-3"
-                        onClick={() => handleEdit(item)}
-                    >Edit</button>
-                    <button className="btn btn-danger"
-                        onClick={() => handleDelete(item)}
-                    >Del</button>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+                    onClick={() => handleSort("asc", "id")}
+                    ></i>
+                  </span>
+                </div>
+              </th>
+              <th>Email</th>
+              <th>
+                <div className="sort-header">
+                  <span>First Name</span>
+                  <span>
+                    <i
+                      className="fa-solid fa-arrow-up"
+                      onClick={() => handleSort("desc", "first_name")}
+                    ></i>
+                    <i
+                      className="fa-solid fa-arrow-down"
+                      onClick={() => handleSort("asc", "first_name")}
+                    ></i>
+                  </span>
+                </div>
+              </th>
+              <th>Last Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listUsers &&
+              listUsers.length > 0 &&
+              listUsers.map((item, index) => {
+                return (
+                  <tr key={`user-${index}`}>
+                    <td>{item.id}</td>
+                    <td>{item.email}</td>
+                    <td>{item.first_name}</td>
+                    <td>{item.last_name}</td>
+                    <td>
+                      <button className="btn btn-warning mx-sm-3"
+                          onClick={() => handleEdit(item)}
+                      >Edit</button>
+                      <button className="btn btn-danger"
+                          onClick={() => handleDelete(item)}
+                      >Del</button>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </Table>
+      </div>
+      
       <ReactPaginate
         breakLabel="..."
         nextLabel="next >"

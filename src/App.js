@@ -9,7 +9,7 @@ import AppRoutes from "./routes/AppRoutes";
 function App() {
   
   const { user, loginContext } = useContext(UserContext);
-  console.log("user: ",user);
+  // console.log("user: ",user);
 
   //fix a bug of unsave data after reloadpage
   useEffect(() => {

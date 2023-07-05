@@ -7,6 +7,7 @@ const PrivateRoute = (props) => {
 
     const { user } = useContext(UserContext);
 
+
     if(user && !user.auth){
         return <>
              <Alert variant="danger" className="mt-3">

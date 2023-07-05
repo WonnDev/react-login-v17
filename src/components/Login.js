@@ -33,7 +33,7 @@ const Login = () => {
       }
       setClickedLogin(true);
       
-      let res = await loginApi(email2, password2);
+      let res = await loginApi(email2, password2); // email2.trim() nessecsory but it filter space " ". (default was?)
       if(res && res.token){
           // localStorage.setItem("token", res.token); //move to UserContext
           loginContext(email2, res.token);
@@ -51,6 +51,12 @@ const Login = () => {
   const handleGoBack = () => {
     navigate("/");
   }
+
+  // const handlePressEnter = (e) => {
+  //   if(e && e.key === 'Enter'){
+  //     handleLogin();
+  //   }
+  // }
 
   //loginpage
   useEffect(() => {
@@ -1076,6 +1082,7 @@ const Login = () => {
         id="loginPassword"
         value={password2}
         onChange={(e) => setPassword(e.target.value)}
+        // onKeyDown={(e) => handlePressEnter(e)}
         />
         <label id="showPasswordToggle" htmlFor="showPasswordCheck">
           Show
