@@ -80,3 +80,6 @@ down to v17 (package.json) 17.0.2 (react,react-dom), syntax v17 in index.js
 --save-exact react-csv@2.2.2 papaparse@5.3.2 (import/export CSV.file)
 --save-exact react-router-dom@6.3.0
 --save-exact autoprefixer@10.4.5
+
+branch  >
+--save-exact redux@4.2.0 react-redux@8.0.1 redux-thunk@2.4.1 (thunk: middleWare)
