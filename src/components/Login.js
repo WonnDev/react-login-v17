@@ -1,14 +1,15 @@
-/* eslint-disable */ //eslint error because undefine function of TweenMax but index.html was inport by cdn
+/* eslint-disable */ //eslint error because undefine function of TweenMax but index.html was import by cdn
 import "./Login.scss";
 import { useState, useEffect, useRef, useContext } from "react";
-import { loginApi } from "../services/UserService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { handleLoginRedux } from "../redux/actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
-  //useContext
-  const { loginContext } = useContext(UserContext);
+
+  //dispatch
+  const dispatch = useDispatch();
 
   //navigate
   const navigate = useNavigate();
@@ -17,40 +18,26 @@ const Login = () => {
   const [password2, setPassword] = useState("");
 
   const [clickedLogin, setClickedLogin] = useState(false);
-
-  //check login
-  // useEffect(() => {
-  //     let token = localStorage.getItem("token");
-  //     if(token) {
-  //         navigate("/");
-  //     }
-  // }, [])
+  const isLoading = useSelector(state => state.user.isLoading);
+  const account = useSelector(state => state.user.account);
 
   const handleLogin = async () => {
       if(!email2 || !password2) {
           toast.error("Email/Password is required!");
           return;
       }
-      setClickedLogin(true);
-      
-      let res = await loginApi(email2, password2); // email2.trim() nessecsory but it filter space " ". (default was?)
-      if(res && res.token){
-          // localStorage.setItem("token", res.token); //move to UserContext
-          loginContext(email2, res.token);
-          toast.success("Login Success!");
-          setTimeout(() => {navigate("/")}, 1200);
-      } else {
-          //error
-          if(res && res.status === 400) {
-              toast.error(res.data.error);
-          }
-      }
-      setClickedLogin(false);
+      dispatch(handleLoginRedux(email2,password2));
   }
 
   const handleGoBack = () => {
     navigate("/");
   }
+
+  //check login with redux then navigate
+  useEffect(() => {
+    if(account && account.auth === true)
+    navigate("/");
+  }, [account]);
 
   // const handlePressEnter = (e) => {
   //   if(e && e.key === 'Enter'){
@@ -58,7 +45,7 @@ const Login = () => {
   //   }
   // }
 
-  //loginpage
+  //loginpage dta
   useEffect(() => {
       console.log("All assets are loaded");
       var emailLabel = document.querySelector("#loginEmailLabel"),
@@ -1098,7 +1085,7 @@ const Login = () => {
             handleLogin();
         }}>
             Log in&nbsp;
-            { clickedLogin && <i className="fa-solid fa-cog fa-spin fa-spin-reverse"></i>}
+            { isLoading && <i className="fa-solid fa-cog fa-spin fa-spin-reverse"></i>}
         </button>
       </div>
       <span className="style-btn-goback" onClick={handleGoBack}>
