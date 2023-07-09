@@ -3,7 +3,7 @@ import { USER_LOGIN, USER_LOGOUT } from "../actions/userAction";
 const INITIAL_STATE = {
 
     account: {
-        email: '',
+        email: '123',
         auth: false
     }
 };

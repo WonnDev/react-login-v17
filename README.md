@@ -83,3 +83,4 @@ down to v17 (package.json) 17.0.2 (react,react-dom), syntax v17 in index.js
 
 branch  >
 --save-exact redux@4.2.0 react-redux@8.0.1 redux-thunk@2.4.1 (thunk: middleWare)
+--save-exact redux-devtools-extension@2.13.9
