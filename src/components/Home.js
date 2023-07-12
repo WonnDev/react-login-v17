@@ -15,7 +15,7 @@ const Home = () => {
     <>
       { user && user.auth === true
       ? <Homechild child1="Homepage is building..." child2="Please visit Manage Users." />
-      : <Homechild child1="Homepage is building..." child2={"Please Login at Setting/ Login."} /> }
+      : <Homechild child1="You are not Login..." child2={"Please Login at Setting/Login."} /> }
     </>
     // <Homechild child1={"Please Login..."} child2="Homepage is building... Please visit Manage Users" />
   )
