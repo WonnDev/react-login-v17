@@ -84,3 +84,35 @@ down to v17 (package.json) 17.0.2 (react,react-dom), syntax v17 in index.js
 branch  >
 --save-exact redux@4.2.0 react-redux@8.0.1 redux-thunk@2.4.1 (thunk: middleWare)
 --save-exact redux-devtools-extension@2.13.9
+
+## Run Locally
+
+Install dependencies
+
+```bash
+  npm i
+  or
+  npm install
+```
+
+Start the server
+
+```bash
+  npm start
+```
+
+
+
+## Tech Stack
+
+* [React](https://reactjs.org/)
+* [Redux](https://redux.js.org/)
+* [Bootstrap](https://getbootstrap.com/)
+* [Axios](https://github.com/axios/axios)
+* [React-csv](https://www.npmjs.com/package/react-csv)
+* [React-papaparse](https://www.npmjs.com/package/react-papaparse)
+* [React-paginate](https://www.npmjs.com/package/react-paginate)
+* [Fontawesome](https://fontawesome.com/)
+* [Toastify](https://www.npmjs.com/package/react-toastify)
+* [Lodash](https://lodash.com/)
+* [Fake API](https://reqres.in/)

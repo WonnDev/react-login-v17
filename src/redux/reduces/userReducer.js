@@ -7,8 +7,11 @@ const INITIAL_STATE = {
         token: ''
     },
     isLoading: false,
-    isError: false
+    isError: false,
+// accounts: localStorage.get('') ? localStorage.get('') : []
 };
+
+
 
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {

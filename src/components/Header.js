@@ -21,7 +21,6 @@ const Header = (props) => {
 
   const handleLogout = () => {
     dispatch(handleLogoutRedux());
-
   }
   useEffect(()  => {
     if(user && user.auth === false && window.location.pathname !== '/login'){
